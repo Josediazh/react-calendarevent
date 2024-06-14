@@ -1,0 +1,55 @@
+.calendarevent i{
+    font-size: 13px;
+}
+
+.calendarevent span{
+    font-size: 13px;
+    text-overflow: clip;
+    overflow: hidden;
+}
+
+.modalevent i{
+   color: blue;
+   font-size: 15px;
+}
+
+i{
+    margin-right: 5px;
+}
+
+
+.ReactModalPortal > div{
+    opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transition: opacity .2s ease-in-out;
+    z-index: 999;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+.modalevent {
+    background: white;
+    border-radius: 5px;
+    color: rgb(51, 51, 51);
+}
+
+.valid-form{
+    color: red;
+    font-size: 10px;
+}
+
+.notes_event{
+    overflow: hidden;
+    text-overflow: clip;
+}
