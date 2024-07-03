@@ -7,12 +7,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { exitActiveEvent, setNewEvent } from "../../../store/calendar/calendarSlice";
 import { useEffect } from "react";
+import { useCalendarStore } from "../../../hook/useCalendarStore";
 
 export const CalendarNewEventModal = () => {
 
     const dispatch = useDispatch();
     const {isNewEventModalOpen} = useSelector( (state) => state.ui );
     const {activeEvent} = useSelector( (state) => state.calendar );
+
+    const { startNewEvent } = useCalendarStore(); 
 
     useEffect(() => {
       setInputForm({
@@ -34,7 +37,6 @@ export const CalendarNewEventModal = () => {
       });
     }
 
-
     const onDateChange = (event,name) => {
       setInputForm({
           ...inputForm,
@@ -42,47 +44,20 @@ export const CalendarNewEventModal = () => {
       });
     }
 
-    const formValidations = {
-      title: [ (value) => value.length >= 1, 'El evento debe tener un titulo'],
-    }
-
-    const [formValidate, setFormValidate] = useState()
-
-    const onFormValidate = () =>{
-
-        const formErrorMessage = {}
-
-        for (const formField of Object.keys( formValidations )) {
-
-            const [ fn, errorMessage ] = formValidations[formField];
-
-            formErrorMessage[`${ formField }Message`] = fn( inputForm[formField] ) ? null : errorMessage;
-
-        }
-
-        setFormValidate(formErrorMessage);
-
-    }
-
     const onSubmit = (event) => {
       event.preventDefault();
-      onFormValidate();
-      //console.log(formValidate?.titleMessage);
-      //if (formValidate?.titleMessage != '' ) return;
 
       const events = {
-        id: new Date().getTime(),
-        title: inputForm.title,
-        start: inputForm.start,
-        end:  inputForm.end,
-        notes: inputForm.notes,
-        user: {
-          id: 1231231,
-          name: 'jose diaz'
-        }
+        titleevent: inputForm.title || 'Evento sin titulo',
+        startevent: inputForm.start,
+        endevent:  inputForm.end,
+        notesevent: inputForm.notes,
       }
 
-      dispatch(setNewEvent(events));
+      startNewEvent(events);
+
+      //dispatch(setNewEvent(events));  
+      
       dispatch(onNewEventModalClose());
     }
 
@@ -103,7 +78,6 @@ export const CalendarNewEventModal = () => {
       const onCloseModal = () => {
         dispatch(onNewEventModalClose());
         dispatch(exitActiveEvent())
-        setFormValidate({});
       }
       
   return (
@@ -117,10 +91,7 @@ export const CalendarNewEventModal = () => {
         <form onSubmit={onSubmit} className="row">
           <div className="col-12 mb-3 has-validation">
             <label className="form-label">Titulo</label>
-            <input className="form-control" type="text" placeholder="Junta con producción"name="title" onChange={onInputChange} value={inputForm.title} />
-            <div className={ (!!formValidate?.titleMessage) ? "valid-form" : "" }>
-              {formValidate?.titleMessage}
-            </div>
+            <input className="form-control" type="text" placeholder="Junta con producción" name="title" onChange={onInputChange} value={inputForm.title} />
           </div>
           <div className="col-6">
             <label className="form-label">Fecha inicio</label>

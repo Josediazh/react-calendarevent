@@ -9,6 +9,10 @@ export const calendarSlice = createSlice({
     name: 'calendar',
     initialState,
     reducers: {
+        setEvent: (state,action) => {
+            state.events = action.payload;
+            state.activeEvent = {};
+        },
         setActiveEvent: (state,action) => {
             state.activeEvent = action.payload;
         },
@@ -27,4 +31,4 @@ export const calendarSlice = createSlice({
     }
 });
 
-export const { setActiveEvent,exitActiveEvent,setNewEvent,deleteEvent } = calendarSlice.actions;
+export const { setActiveEvent,exitActiveEvent,setNewEvent,deleteEvent,setEvent } = calendarSlice.actions;

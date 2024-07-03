@@ -49,3 +49,13 @@
     font-weight: 600;
     text-decoration: none;
 }
+
+.loginform .feedback{
+    color: red;
+    font-size: 12px;
+}
+
+.registerform .feedback{
+    color: orange;
+    font-size: 12px;
+}

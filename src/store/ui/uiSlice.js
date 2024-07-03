@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isEventModalOpen: false,
     isNewEventModalOpen: false,
+    isfetch: false
 }
 
 export const uiSlice = createSlice({
@@ -22,9 +23,15 @@ export const uiSlice = createSlice({
         onNewEventModalClose: (state ) => {
             state.isNewEventModalOpen = false;
         },
+        onStartFetch: (state ) => {
+            state.isfetch = true;
+        },
+        onEndtFetch: (state ) => {
+            state.isfetch = false;
+        },
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { onEventModalOpen,onEventModalClose,onNewEventModalOpen,onNewEventModalClose } = uiSlice.actions;
+export const { onEventModalOpen,onEventModalClose,onNewEventModalOpen,onNewEventModalClose,onStartFetch,onEndtFetch } = uiSlice.actions;

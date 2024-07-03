@@ -8,13 +8,17 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { onEventModalOpen, onNewEventModalOpen } from '../../../store/ui/uiSlice'
 import { useState } from 'react'
 import { setActiveEvent } from '../../../store/calendar/calendarSlice'
-
+import { useEffect } from 'react'
+import { useCalendarStore } from '../../../hook/useCalendarStore'
 
 dayjs.locale(mx)
 
 export const CalendarApp = (props) => {  
 
+  const { startGetEvents } = useCalendarStore();
+
   const dispatch = useDispatch();
+
   const {events} = useSelector( (state) => state.calendar );
 
   const [calendarView] = useState(localStorage.getItem('calendarView') || 'month');
@@ -67,6 +71,13 @@ export const CalendarApp = (props) => {
   const onViewCalendar = (event) => {
     localStorage.setItem('calendarView',event);
   }
+
+  useEffect(() => {
+
+    startGetEvents();
+    
+  }, [])
+  
 
   return (
     <Calendar 
