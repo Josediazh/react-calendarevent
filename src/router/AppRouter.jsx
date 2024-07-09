@@ -4,15 +4,25 @@ import { CalendarPage } from '../page/calendar/pages/CalendarPage'
 import { LoginPage } from '../page/auth/pages/LoginPage'
 import { useAuthStore } from '../hook/useAuthStore'
 import {CheckingAuth} from '../components/CheckingAuth'
+import { useCalendarStore } from '../hook/useCalendarStore'
+import { CalendarEdit } from '../page/calendar/pages/CalendarEdit'
 
 export const AppRouter = () => {
 
 const {status,checkAuthToken} = useAuthStore();
+const { startGetEvents } = useCalendarStore();
 
 useEffect(() => {
   checkAuthToken();
 }, [])
 
+useEffect(() => {
+
+  if(status == 'authenticated' ){
+    startGetEvents();
+  }
+  
+}, [status])
 
 const router = createBrowserRouter(
   status == 'authenticated'
@@ -23,8 +33,8 @@ const router = createBrowserRouter(
         element: <CalendarPage />,
     },
     {
-      path: "/event",
-      element: <h1>Evento</h1>,
+      path: "/event/:id",
+      element: <CalendarEdit />
     },
   ]: status === "checking"
   ?[

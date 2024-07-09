@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { onEventModalClose } from '../../../store/ui/uiSlice'
 import { deleteEvent, exitActiveEvent } from "../../../store/calendar/calendarSlice";
 import dayjs from "dayjs";
+import { useCalendarStore } from "../../../hook/useCalendarStore";
+import { Link } from "react-router-dom";
 
 
 export const CalendarModal = () => {
@@ -11,6 +13,7 @@ export const CalendarModal = () => {
   const dispatch = useDispatch();
   const {isEventModalOpen} = useSelector( (state) => state.ui );
   const {activeEvent} = useSelector( (state) => state.calendar );
+  const { startDeleteEvent } = useCalendarStore();
 
   const customStyles = {
     content: {
@@ -31,7 +34,10 @@ export const CalendarModal = () => {
   }
 
   const onDeleteEvent = () => {
-    dispatch(deleteEvent(activeEvent));
+    
+    const { id } = activeEvent;
+
+    startDeleteEvent({id});
     dispatch(onEventModalClose());
   }
 
@@ -46,7 +52,12 @@ export const CalendarModal = () => {
         <div className="row justify-content-end">
           <div className="col-11"></div>
           <div className="col-1 btn-group justify-content-end">
-            <button type="button" className="btn"><i className="bi bi-pencil-fill"></i></button>
+          <Link 
+                className={'btn'}
+                to={`/event/${activeEvent.id}`}
+                >
+                <i className="bi bi-pencil-fill"></i>
+            </Link>
             <button onClick={onDeleteEvent} type="button" className="btn"><i className="bi bi-trash3-fill"></i></button>
           </div>
         </div>

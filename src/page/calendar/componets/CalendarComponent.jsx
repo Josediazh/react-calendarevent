@@ -15,8 +15,6 @@ dayjs.locale(mx)
 
 export const CalendarApp = (props) => {  
 
-  const { startGetEvents } = useCalendarStore();
-
   const dispatch = useDispatch();
 
   const {events} = useSelector( (state) => state.calendar );
@@ -71,12 +69,6 @@ export const CalendarApp = (props) => {
   const onViewCalendar = (event) => {
     localStorage.setItem('calendarView',event);
   }
-
-  useEffect(() => {
-
-    startGetEvents();
-    
-  }, [])
   
 
   return (
