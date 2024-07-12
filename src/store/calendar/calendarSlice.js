@@ -27,8 +27,12 @@ export const calendarSlice = createSlice({
             const indexNote = state.events.findIndex( (eventNote) => eventNote.id == action.payload.id );
             state.events.splice(indexNote,1);
             state.activeEvent = {};
-        }
+        },
+        clearEvents: (state,action) => {
+            state.events = [];
+            state.activeEvent = {};
+        },
     }
 });
 
-export const { setActiveEvent,exitActiveEvent,setNewEvent,deleteEvent,setEvent } = calendarSlice.actions;
+export const { setActiveEvent,exitActiveEvent,setNewEvent,deleteEvent,setEvent,clearEvents } = calendarSlice.actions;
